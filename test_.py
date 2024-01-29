@@ -2,8 +2,9 @@ import unittest
 from ner_client import NamedEntityClient
 from test_double import NerModelTestDouble
 class TestNerClient(unittest.TestCase):
+
     def test_get_ents_returns_dictionary_given_empty_string_causes_return_empty(self):  
-        model = NerModelTestDouble(model='eng')  
+        model = NerModelTestDouble(model='eng') #to test the Named entity client model 
         model.returns_doc_ents([]) 
         ner = NamedEntityClient(model)
         ents = ner.get_ents(" ")
@@ -21,10 +22,10 @@ class TestNerClient(unittest.TestCase):
         doc_ents = [{'text': 'Laurent Fressinet', 'label_': 'PERSON'}] 
         model.returns_doc_ents(doc_ents) #using our test model
         ner = NamedEntityClient(model)  # behaving like spacy
-        result = ner.get_ents('...') 
+        result = ner.get_ents('...') #will receive from model.returns_doc_ents
         expected_result = {'ents': [{'ent': 'Laurent Fressinet', 'label': 'Person'}], 'html': ""} #expected result
         self.assertListEqual(result['ents'], expected_result['ents']) #testing our double environment whether giving us the expected result
-
+        
     def test_get_ents_spacy_NORP_returned_serializes_to_group(self):
         model = NerModelTestDouble('eng') 
         doc_ents = [{'text': 'Lithuanian', 'label_': 'NORP'}] 
@@ -69,6 +70,7 @@ class TestNerClient(unittest.TestCase):
         result = ner.get_ents('...')
         expected_result = {'ents': [{'ent': 'Australia', 'label': 'Location'}, {'ent': 'Paris', 'label': 'Location'}], 'html': ""}
         self.assertListEqual(result['ents'], expected_result['ents'])
+
 
 
     

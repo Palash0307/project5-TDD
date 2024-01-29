@@ -5,11 +5,11 @@ class NamedEntityClient:
         self.model = model
 
     def get_ents(self, sentence):
-        doc = self.model(sentence)
+        doc = self.model(sentence) #will receive from doc_ents in test_double
         entities = [{'ent': ent.text, 'label': self.map_label(ent.label_)} for ent in doc.ents]
         return {'ents': entities, 'html': ''}
 
-    @staticmethod
+    @staticmethod  #used in result
     def map_label(label):
         label_map = {
             'PERSON': 'Person',
